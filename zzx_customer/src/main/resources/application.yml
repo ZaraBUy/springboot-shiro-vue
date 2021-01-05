@@ -1,0 +1,7 @@
+spring:
+  datasource:
+      url: jdbc:mysql://localhost:3306/zzx_customer?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+      username: root
+      password: 1234
+mybatis:
+   mapperLocations: classpath:/mapper/*.xml
