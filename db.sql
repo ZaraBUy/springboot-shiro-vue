@@ -86,25 +86,33 @@ CREATE TABLE `sys_role_permission` (
 
 INSERT INTO `sys_role_permission` VALUES (1,2,101,'2017-11-22 16:26:21','2017-11-22 16:26:32','1'),(2,2,102,'2017-11-22 16:26:21','2017-11-22 16:26:32','1'),(5,2,602,'2017-11-22 16:28:28','2017-11-22 16:28:28','1'),(6,2,601,'2017-11-22 16:28:28','2017-11-22 16:28:28','1'),(7,2,603,'2017-11-22 16:28:28','2017-11-22 16:28:28','1'),(8,2,703,'2017-11-22 16:28:28','2017-11-22 16:28:28','1'),(9,2,701,'2017-11-22 16:28:28','2017-11-22 16:28:28','1'),(10,2,702,'2017-11-22 16:28:28','2017-11-22 16:28:28','1'),(11,2,704,'2017-11-22 16:28:31','2017-11-22 16:28:31','1'),(12,2,103,'2017-11-22 16:28:31','2017-11-22 16:28:31','1'),(13,3,601,'2017-11-22 16:28:47','2017-11-22 16:28:47','1'),(14,3,701,'2017-11-22 16:28:47','2017-11-22 16:28:47','1'),(15,3,702,'2017-11-22 16:35:01','2017-11-22 16:35:01','1'),(16,3,704,'2017-11-22 16:35:01','2017-11-22 16:35:01','1'),(17,3,102,'2017-11-22 16:35:01','2017-11-22 16:35:01','1'),(18,3,101,'2017-11-22 16:35:01','2017-11-22 16:35:01','1'),(19,3,603,'2017-11-22 16:35:01','2017-11-22 16:35:01','1');
 
-#
-# Structure for table "sys_user"
-#
-
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL COMMENT '用户名',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
+  `salt` varchar(255) DEFAULT NULL,
   `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
   `role_id` int(11) DEFAULT '0' COMMENT '角色ID',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `delete_status` varchar(1) DEFAULT '1' COMMENT '是否有效  1有效  2无效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10008 DEFAULT CHARSET=utf8 COMMENT='运营后台用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=10011 DEFAULT CHARSET=utf8 COMMENT='运营后台用户表';
 
-#
-# Data for table "sys_user"
-#
-
-INSERT INTO `sys_user` VALUES (10003,'admin','123456','超级用户23',1,'2017-10-30 11:52:38','2017-11-17 23:51:40','1'),(10004,'user','123456','莎士比亚',2,'2017-10-30 16:13:02','2017-11-18 02:48:24','1'),(10005,'aaa','123456','abba',1,'2017-11-15 14:02:56','2017-11-17 23:51:42','1'),(10007,'test','123456','就看看列表',3,'2017-11-22 16:29:41','2017-11-22 16:29:41','1');
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES ('10008', 'zhou', 'bb41d76bf64d95bf0cdfe301249ee6a9', '84f4fb10a5d3ef4020390cbe74025d96', 'xx', '1', '2021-01-05 10:23:49', '2021-01-05 10:23:49', '1');
+INSERT INTO `sys_user` VALUES ('10009', 'admin', '1db674bdf1d0c30bcb5f656458d4a32e', '77ed135e7cca6b6958475bfccc9f5e46', '超级管理员', '1', '2021-01-05 14:17:08', '2021-01-05 14:17:08', '1');
+INSERT INTO `sys_user` VALUES ('10010', '小四', '6477010d27de1bd5dbbfd3274dab67a4', '05d56fd944272cf397ae23f6dabbf3ea', '小时代', '2', '2021-01-05 16:54:01', '2021-01-05 16:54:01', '1');
+DROP TRIGGER IF EXISTS `tri_create_time`;
+DELIMITER ;;
+CREATE TRIGGER `tri_create_time` BEFORE INSERT ON `sys_user` FOR EACH ROW BEGIN
+    SET NEW.create_time = now();
+END
+;;
+DELIMITER ;
