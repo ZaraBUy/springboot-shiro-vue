@@ -71,8 +71,3 @@
 npm install
 npm run dev
 ```
-
-后端就是常规的shiro配置,前端代码如果看不明白,可以参考[前端权限代码说明](./explain-frontend.md) 
-
-## 分配权限页面效果
-![分配权限页面](http://img.heeexy.com/role_permission.png)
